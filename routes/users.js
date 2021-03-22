@@ -12,7 +12,9 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id",getUser, (req, res) => {});
+router.get("/:id",getUser, (req, res) => {
+    res.json(res.user);
+});
 
 router.post("/", async (req, res) => {
   const user = new User({
@@ -35,16 +37,16 @@ router.delete("/:id", getUser, (req, res) => {});
 
 async function getUser(req, res, next) {
     try {
-        usuario = await User.findById(req.params._id)  
-        if(usuario == null){
+        user = await User.findById(req.params.id)  
+        if(user == null){
             return res.status(404).json({message: 'Cant find user'});
         }      
     } catch (error) {
         return res.status(500).json({message: error.message})
         
     }
-    res.user = user;
-    next();
+    res.user = user
+    next()
 }
 
 
