@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", (req, res) => {});
+router.get("/:id",getUser, (req, res) => {});
 
 router.post("/", async (req, res) => {
   const user = new User({
@@ -29,9 +29,24 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.patch("/:id", (req, res) => {});
+router.patch("/:id", getUser,  (req, res) => {});
 
-router.delete("/:id", (req, res) => {});
+router.delete("/:id", getUser, (req, res) => {});
+
+async function getUser(req, res, next) {
+    try {
+        usuario = await User.findById(req.params._id)  
+        if(usuario == null){
+            return res.status(404).json({message: 'Cant find user'});
+        }      
+    } catch (error) {
+        return res.status(500).json({message: error.message})
+        
+    }
+    res.user = user;
+    next();
+}
+
 
 //rotas do subjects
 router.get("/sub", async (req, res) => {
