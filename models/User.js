@@ -26,10 +26,10 @@ const SubjectSchema = new mongoose.Schema({
     require: true,
   },
   note: Array,
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },  
 });
 
 const User = mongoose.model("User", UserSchema);
 const Subject = mongoose.model("Subject", SubjectSchema);
 
-module.exports = User,  Subject;
+module.exports = { User,  Subject };
