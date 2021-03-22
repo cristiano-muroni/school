@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {User, Subject} = require('../models/User');
 
-router.get('/',  (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const users = await User.find()
         res.json(users);
@@ -39,9 +39,8 @@ router.patch('/:id',  (req, res) => {
 
 });
 
-router.delet('/:id',  (req, res) => {
+router.delete('/:id',  (req, res) => {
 
 });
-
 
 module.exports = router;
