@@ -20,16 +20,22 @@ const UserSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
   registered: Boolean,
 });
+const UserSubjectSchema = new mongoose.Schema({
+  name: String,  
+});
+
 const SubjectSchema = new mongoose.Schema({
   title: {
     type: String,
     require: true,
   },
-  note: Array,
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },  
+  note: Number,
+  prove:Number,
+  user: UserSubjectSchema,
 });
 
 const User = mongoose.model("User", UserSchema);
 const Subject = mongoose.model("Subject", SubjectSchema);
+const UserSubject = mongoose.model("UserSubject", UserSubjectSchema);
 
-module.exports = { User,  Subject };
+module.exports = { User, Subject, UserSubject };
