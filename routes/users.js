@@ -31,10 +31,37 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.patch("/:id", getUser,  (req, res) => {});
+router.patch("/:id", getUser, async (req, res) => {
+    if(req.body.name != null){
+        res.user.name = req.body.name;
+    }
+    if(req.body.email != null){
+        res.user.email = req.body.email;
+    }
+    if(req.body.phone != null){
+        res.user.phone = req.body.phone;
+    }
+    try {
+        const updateUser = await res.user.save();
+        res.json(updateUser);
+        
+    } catch (error) {
+        res.status(500).json({message: error.message});
+        
+    }
+});
 
-router.delete("/:id", getUser, (req, res) => {});
+//rota que remove um usuario pelo id
+router.delete("/:id", getUser, async (req, res) => {
+    try {
+        await res.user.remove();
+        res.json({message: 'User was deleted'});               
+    } catch (error) {
+        res.status(500).json({message: error.message});        
+    }
+});
 
+// midleware para verificar se o id existe 
 async function getUser(req, res, next) {
     try {
         user = await User.findById(req.params.id)  
