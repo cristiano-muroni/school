@@ -31,6 +31,7 @@ const SubjectSchema = new mongoose.Schema({
   },
   note: Number,
   prove:Number,
+  absences:Number,
   user: UserSubjectSchema,
 });
 

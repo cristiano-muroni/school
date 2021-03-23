@@ -16,7 +16,7 @@ db.once("open", () => console.log("database Connected"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const users = require("./routes/users");
-app.use("/users", users);
+const router = require("./routes");
+app.use(router);
 
 app.listen("3000", () => console.log("Server Running"));
