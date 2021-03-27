@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require('bcryptjs');
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -14,14 +15,14 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    select: false,
+    select: true,
   },
   phone: String,
   date: { type: Date, default: Date.now },
   registered: Boolean,
 });
 const UserSubjectSchema = new mongoose.Schema({
-  name: String,  
+  name: String,
 });
 
 const SubjectSchema = new mongoose.Schema({
@@ -30,10 +31,17 @@ const SubjectSchema = new mongoose.Schema({
     require: true,
   },
   note: Number,
-  prove:Number,
-  absences:Number,
+  prove: Number,
+  absences: Number,
   user: UserSubjectSchema,
 });
+
+UserSchema.pre('save', async function(next) {
+  const hash = await bcrypt.hash(this.password, 10);
+  this.password = hash;
+
+  next();
+})
 
 const User = mongoose.model("User", UserSchema);
 const Subject = mongoose.model("Subject", SubjectSchema);

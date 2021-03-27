@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const authMidler = require('../midlewares/auth');
 const { User, Subject, UserSubject } = require("../models/User");
 
 //rotas do users
-router.get("/", async (req, res) => {
+router.get("/", authMidler, async (req, res) => {
   try {
     const users = await User.find();
     res.json(users);
@@ -12,7 +13,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", getUser, (req, res) => {
+router.get("/:id", authMidler, getUser, (req, res) => {
   res.json(res.user);
 });
 
@@ -25,13 +26,14 @@ router.post("/", async (req, res) => {
   });
   try {
     const newUser = await user.save();
+    newUser.password = undefined;
     res.status(200).json(newUser);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 });
 
-router.patch("/:id", getUser, async (req, res) => {
+router.patch("/:id", authMidler, getUser, async (req, res) => {
   if (req.body.name != null) {
     res.user.name = req.body.name;
   }
@@ -50,7 +52,7 @@ router.patch("/:id", getUser, async (req, res) => {
 });
 
 //rota que remove um usuario pelo id
-router.delete("/:id", getUser, async (req, res) => {
+router.delete("/:id", authMidler, getUser, async (req, res) => {
   try {
     await res.user.remove();
     res.json({ message: "User was deleted" });
