@@ -4,7 +4,9 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 
-mongoose.connect(process.env.DATABASE_STRING, {
+const port = process.env.PORT || 3000;//@Herokuloko2021enois ...app school-chatbot-2021...no mongo cristiano.muroni@compasso.com.br
+
+mongoose.connect(process.env.MONGODB_URL ||process.env.DATABASE_STRING, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
@@ -19,4 +21,4 @@ app.use(bodyParser.json());
 const router = require("./routes");
 app.use(router);
 
-app.listen("3000", () => console.log("Server Running"));
+app.listen(port, () => console.log(`Server running at port ${port}`));

@@ -14,7 +14,7 @@ function generateToken(params = {}) {
 router.post("/", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const userProps = ["name", "email", "password"]; // array de propriedades a retornar no objeto de usuario
+    //const userProps = ["name", "email", "password"]; // array de propriedades a retornar no objeto de usuario
     const user =  (await User.findOne({ email }))
 
     console.log("user", user);
