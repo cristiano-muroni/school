@@ -7,7 +7,7 @@ const routerAuth = require("./auth");
 const authMidler = require("../midlewares/auth");
 
 
-router.use("/sub", authMidler, routerSubjects);
+router.use("/sub", routerSubjects);
 router.use("/users", routerUsers);
 router.use("/auth", routerAuth);
 
