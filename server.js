@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 
-const port = process.env.PORT || 3000;//@Herokuloko2021enois ...app school-chatbot-2021...no mongo cristiano.muroni@compasso.com.br
+const port = process.env.PORT || 3000;
 
 mongoose.connect(process.env.MONGODB_URL ||process.env.DATABASE_STRING, {
   useNewUrlParser: true,

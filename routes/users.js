@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const authMidler = require('../midlewares/auth');
+const authMidler = require("../midlewares/auth");
 const { User, Subject, UserSubject } = require("../models/User");
 
 //rotas do users
@@ -18,13 +18,14 @@ router.get("/:id", authMidler, getUser, (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const user = new User({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-    phone: req.body.phone,
-  });
   try {
+    const user = new User({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      phone: req.body.phone,
+    });
+
     const newUser = await user.save();
     newUser.password = undefined;
     res.status(200).json(newUser);

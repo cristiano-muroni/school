@@ -6,16 +6,20 @@ const jwt = require("jsonwebtoken");
 const authConfig = require("../config/auth.json");
 
 function generateToken(params = {}) {
-  return jwt.sign(params, authConfig.secret, {
-    expiresIn: 3600,
-  });
+  try {
+    return jwt.sign(params, authConfig.secret, {
+      expiresIn: 3600,
+    });
+  } catch (error) {
+    throw new Error(error);
+  }
 }
 
 router.post("/", async (req, res) => {
   try {
     const { email, password } = req.body;
     //const userProps = ["name", "email", "password"]; // array de propriedades a retornar no objeto de usuario
-    const user =  (await User.findOne({ email }))
+    const user = await User.findOne({ email });
 
     console.log("user", user);
 
