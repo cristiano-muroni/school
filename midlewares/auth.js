@@ -8,15 +8,15 @@ module.exports = (req, res, next) => {
     if (!authHeader) {
       return res.status(401).send({ error: "No token provied" });
     }
-    const parts = authHeader.split(" ");//separando header
+    const parts = authHeader.split(" "); //separando header
 
     if (!parts.length === 2)
       return res.status(401).send({ error: "Token error" });
 
     const [scheme, token] = parts;
 
-    if (!/^Bearer $/i.test(scheme)) {
-      //regex verificando se Bearer existe
+    if (!scheme.includes("Bearer")) {
+      // verificando se Bearer existe
       return res.status(401).send({ error: " Token malformatted" });
     }
 
