@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
     if (!authHeader) {
       return res.status(401).send({ error: "No token provied" });
     }
-    const parts = authHeader.split(" "); //separando header
+    const parts = authHeader.split(" "); //
 
     if (!parts.length === 2)
       return res.status(401).send({ error: "Token error" });
@@ -23,9 +23,7 @@ module.exports = (req, res, next) => {
     jwt.verify(token, authConfig.secret, (err, decoded) => {
       req.userId = decoded.id;          //alteração
       if (err) return res.status(401).send({ error: "Token invalid" });
-    });
-
-    req.userId = decoded.id;
+    });    
 
     return next();
   } catch (error) {
